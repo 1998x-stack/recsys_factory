@@ -1,0 +1,29 @@
+task: ctr
+dataset:
+  name: toy_ctr
+  path: data/toy_ctr.csv
+  label_col: click
+  dense_cols: [price, age]
+  cat_cols: [ad_id, user_id, device, country]
+  freq_threshold: 2
+  hash_bins: 200000
+split:
+  method: random
+  train_ratio: 0.8
+  seed: 42
+model:
+  name: gbdt_lr
+  params:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.9
+    include_raw: true
+    lr_lr: 0.1
+    lr_reg: 1e-6
+    lr_epochs: 4
+    lr_batch_size: 65536
+    seed: 42
+metrics: ["AUC", "LogLoss"]
+trainer:
+  name: ctr_offline

@@ -1,0 +1,26 @@
+task: ctr
+dataset:
+  name: toy_ctr
+  path: data/toy_ctr.csv
+  label_col: click
+  dense_cols: [price, age]
+  cat_cols: [ad_id, user_id, device, country]
+  freq_threshold: 2
+  hash_bins: 200000
+split:
+  method: random
+  train_ratio: 0.8
+  seed: 42
+model:
+  name: ls_plm
+  params:
+    n_regions: 16
+    kmeans_max_iter: 100
+    lr_lr: 0.1
+    lr_reg: 1e-6
+    lr_epochs: 3
+    lr_batch_size: 65536
+    seed: 42
+metrics: ["AUC", "LogLoss"]
+trainer:
+  name: ctr_offline

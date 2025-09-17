@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recsys-factory"
+version = "0.2.0"
+description = "Pluggable RecSys factory: CF/MF & CTR (LR/Poly2/FM/FFM)"
+authors = [{name="Your Name", email="you@example.com"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "pyyaml>=6.0",
+  "loguru>=0.7",
+  "pandas>=2.0",
+  "scikit-learn>=1.3",   # NEW
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.optional-dependencies]
+lightgbm = ["lightgbm>=4.0"]
+xgboost  = ["xgboost>=2.0"]

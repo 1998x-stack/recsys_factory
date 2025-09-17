@@ -1,0 +1,40 @@
+dataset:
+  name: movielens100k
+  path: data/ml-100k/u.data
+
+split:
+  method: loo
+  seed: 42
+
+stages:
+  - name: recall
+    component: itemcf
+    params:
+      k: 200
+      shrinkage: 50.0
+      use_tfidf: true
+    topk: 300
+
+  - name: rank
+    component: bpr
+    params:
+      factors: 64
+      lr: 0.05
+      reg: 0.002
+      epochs: 15
+      neg_ratio: 4
+    topk: 50
+
+  - name: rerank_mmr
+    component: mmr
+    params:
+      lambda_: 0.7
+    topk: 20
+
+metrics: ["P@10", "R@10", "NDCG@10", "MAP@10"]
+
+trainer:
+  name: offline
+
+evaluator:
+  name: offline

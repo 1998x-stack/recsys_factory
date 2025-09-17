@@ -1,0 +1,31 @@
+task: ctr
+
+dataset:
+  name: toy_ctr         # or criteo_csv
+  path: data/toy_ctr.csv
+  label_col: click
+  dense_cols: [price, age]
+  cat_cols: [ad_id, user_id, device, country]
+  freq_threshold: 2
+  hash_bins: 200000     # 建议10万~百万量级
+
+split:
+  method: random
+  train_ratio: 0.8
+  seed: 42
+
+model:
+  name: fm              # lr | poly2_lr | fm | ffm
+  params:
+    factors: 16
+    lr: 0.05
+    reg_w: 1e-6
+    reg_v: 1e-6
+    epochs: 5
+    batch_size: 4096
+    seed: 42
+
+metrics: ["AUC", "LogLoss"]
+
+trainer:
+  name: ctr_offline
